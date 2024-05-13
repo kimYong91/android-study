@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".KeypadActivity"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="24dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/add"
+            app:tint="#4CAF50" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처 추가"
+            android:textColor="#4CAF50" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="02-120"
+        android:textSize="48sp" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:columnCount="3"
+        android:orientation="horizontal">
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="2"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="3"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="4"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="5"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="6"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="7"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="8"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="9"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="*"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:paddingLeft="40dp"
+            android:paddingTop="16dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="16dp"
+            android:backgroundTint="@color/white"
+            android:text="#"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+    </GridLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/video_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/video" />
+
+        <ImageView
+            android:id="@+id/call_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toRightOf="@id/video_icon"
+            android:src="@drawable/call" />
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_toRightOf="@id/call_icon"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
