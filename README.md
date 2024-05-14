@@ -132,5 +132,269 @@ MyAndroidApp/
         binding.visibleButton.setOnClickListener {
             binding.targetView.visibility = View.VISIBLE
         }
-
    ```
+
+## 뷰를 배치하는 레이아웃
+1. 수평, 수직으로 배치 - LinearLayout
+2. 상대적은 위치로 배치 - RelativeLayout
+3. 겹쳐서 배치 - FrameLayout
+4. 격자 형태로 배치 - GridLayout
+5. 제약조건으로 배치 - ConstraintLayout
+
+## 사용자 이벤트 처리
+1. 터치 이벤트
+2. 키 이벤트
+3. 뷰 이벤트
+- [이벤트 공식문서](https://developer.android.com/develop/ui/views/touch-and-input/input-events?hl=ko)
+
+## 리소스
+
+- [공식문서 : 앱 리소스 개요](https://developer.android.com/guide/topics/resources/providing-resources?hl=ko)
+- [XML도형 드로어블](https://developer.android.com/guide/topics/resources/drawable-resource?hl=ko#Shape)
+
+### 리소스의 종류
+
+#### 1. 레이아웃 리소스 (Layout Resources)
+- 파일 위치: `res/layout`
+- 확장자: `.xml`
+- 설명: 액티비티, 프래그먼트, 또는 앱의 UI 부분의 뷰 구조를 정의합니다. 레이아웃 에디터를 통해 드래그 앤 드롭으로 구성할 수 있으며, XML로 직접 작성도 가능합니다.
+
+#### 2. 이미지 리소스 (Drawable Resources)
+- 파일 위치: `res/drawable`
+- 확장자: `.png`, `.jpg`, `.gif`, `.xml` 등
+- 설명: 앱에서 사용하는 이미지 파일들을 저장합니다. 해상도에 따라 다른 폴더(`drawable-hdpi`, `drawable-mdpi` 등)에 저장하여 다양한 화면 밀도를 지원합니다.
+
+#### 3. 문자열 리소스 (String Resources)
+- 파일 위치: `res/values`
+- 설명: 모든 텍스트 콘텐츠를 저장합니다. 이를 통해 다국어 지원을 쉽게 구현할 수 있으며, `strings.xml` 파일에서 관리합니다.
+
+#### 4. 색상 리소스 (Color Resources)
+- 파일 위치: `res/values`
+- 설명: 색상 코드를 정의합니다. `colors.xml` 파일을 통해 앱 전체의 색상 테마를 일관되게 관리할 수 있습니다.
+
+#### 5. 치수 리소스 (Dimension Resources)
+- 파일 위치: `res/values`
+- 설명: 모든 치수 정보(예: 마진, 패딩, 폰트 크기)를 저장합니다. `dimens.xml` 파일에서 관리하여 여러 뷰에서 재사용 가능합니다.
+
+#### 6. 스타일 리소스 (Style Resources)
+- 파일 위치: `res/values`
+- 설명: 앱의 테마나 스타일을 정의합니다. `styles.xml` 파일을 통해 디자인을 일관되게 유지할 수 있습니다.
+
+#### 사용하기
+1. 문자열 리소스: `R.string.resource_name`을 사용하여 문자열 리소스를 참조합니다.
+2. 색상 리소스: `ContextCompat.getColor(context, R.color.resource_name)`을 사용하여 색상 리소스를 참조합니다.
+3. 크기 리소스: `getResources().getDimension(R.dimen.resource_name)`을 사용하여 크기 리소스를 참조합니다.
+4. 스타일 리소스: XML 레이아웃 파일에서 `style` 속성을 사용하여 스타일을 적용합니다.
+5. 다국어 지원: 각 언어에 맞는 `strings.xml` 파일을 `res/values` 하위 폴더에 추가하여 다국어를 지원합니다.
+
+
+
+### 프로젝트에 클립아트(아이콘) 추가하기
+
+1. 안드로이드 스튜디오에서 프로젝트 열기
+    - 안드로이드 스튜디오를 열고 작업 중인 프로젝트를 엽니다.
+2. 리소스 디렉토리 열기
+    - `res` 디렉토리를 열고 `drawable` 폴더를 확인합니다. 클립아트(아이콘)는 보통 이 폴더에 추가됩니다.
+3. 새 아이콘 추가하기
+    - `drawable` 폴더를 마우스 오른쪽 버튼으로 클릭하고, `New` > `Vector Asset`을 선택합니다.
+4. 벡터 자산(Vector Asset) 설정
+    - `Vector Asset Studio` 창이 열립니다.
+    - `Icon` 탭에서 `Clip Art` 버튼을 클릭합니다.
+5. 클립아트 선택
+    - `Select Icon` 창이 열리면, 원하는 클립아트를 선택합니다. 여기에는 다양한 기본 제공 아이콘이 있습니다.
+    - 원하는 아이콘을 선택하고 `OK` 버튼을 클릭합니다.
+6. 아이콘 설정 및 추가
+    - `Vector Asset Studio` 창에서 아이콘 이름, 크기, 색상 등을 설정할 수 있습니다.
+    - 설정이 완료되면 `Next` 버튼을 클릭하고, 마지막으로 `Finish` 버튼을 클릭합니다.
+7. 선택한 클립아트가 `drawable` 폴더에 `XML` 파일로 추가됩니다.
+
+### XML 레이아웃 파일에 클립아트(아이콘) 사용하기
+
+
+#### 예시: ImageView에 클립아트 추가
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_your_icon_name"  <!-- 여기에 추가한 아이콘 이름을 사용 -->
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
+```
+
+### 무료 아이콘 사이트 추천
+
+1. [Google Icon / Material Icons](https://fonts.google.com/icons)
+2. [Font Awesome](https://fontawesome.com/)
+3. [Icons8](https://icons8.com/)
+4. [The Noun Project](https://thenounproject.com/)
+5. [Material Icons](https://material.io/resources/icons/)
+6. [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+
+### 1. 폰트 리소스 추가
+
+#### 1-1. 폰트 파일 준비
+먼저, 사용할 폰트 파일(`.ttf` 또는 `.otf` 형식)을 준비합니다.
+
+#### 1-2. 폰트 파일을 프로젝트에 추가
+1. 안드로이드 스튜디오에서 프로젝트를 엽니다.
+2. `res` 폴더 아래에 `font` 폴더를 만듭니다. 만약 `font` 폴더가 없으면 `res` 폴더를 마우스 오른쪽 버튼으로 클릭하고 `New > Android Resource Directory`를 선택하여 `font` 디렉토리를 만듭니다.
+3. 준비한 폰트 파일을 `res/font` 폴더에 복사합니다. 예를 들어, `my_custom_font.ttf` 파일을 추가합니다.
+
+### 1-3. XML 레이아웃 파일에서 폰트 리소스 사용
+```xml
+    <TextView
+        android:text="Hello, World!"
+        android:fontFamily="@font/my_custom_font" />
+```
+
+
+### 플랫폼 리소스
+
+- 플랫폼 리소스의 종류
+
+1. 시스템 아이콘 (System Icons):
+    - 안드로이드는 다양한 기본 아이콘을 제공합니다. 이 아이콘들은 `android.R.drawable` 클래스를 통해 접근할 수 있습니다.
+
+2. 기본 색상 (Default Colors):
+    - 시스템에서 제공하는 기본 색상들은 `android.R.color`를 통해 사용할 수 있습니다.
+
+3. 기본 문자열 (Default Strings):
+    - 예를 들어, 'OK'와 'Cancel' 같은 기본 문자열은 `android.R.string`을 통해 접근할 수 있습니다.
+
+4. 기본 스타일과 테마 (Default Styles and Themes):
+    - 안드로이드는 미리 정의된 스타일과 테마를 제공합니다. 이들은 `android.R.style`과 `android.R.theme`을 통해 사용할 수 있습니다.
+
+### 플랫폼 리소스 사용 예시
+
+- 시스템 아이콘 사용하기
+  레이아웃 파일에서 시스템 아이콘 사용하기:
+```xml
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@android:drawable/ic_delete" />
+```
+- `ic_delete`는 안드로이드 시스템에서 제공하는 삭제 아이콘입니다.
+
+#### 기본 색상 사용하기
+XML에서 기본 색상 참조하기:
+```xml
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/holo_blue_bright" />
+```
+- `holo_blue_bright`는 안드로이드가 제공하는 표준 색상 중 하나입니다.
+
+#### 기본 문자열 사용하기
+```kotlin
+val okString = getString(android.R.string.ok)
+```
+- 이 코드는 프로그래밍적으로 'OK' 문자열을 가져옵니다.
+
+
+### 리소스 조건
+
+- 리소스 한정자 별 조건 종류 (아래 공식문서 확인)
+- [공식문서 : 리소스 조건 및 한정자 사용하기](https://developer.android.com/guide/topics/resources/providing-resources?hl=ko#QualifierRules)
+  안드로이드에서 리소스를 조건에 따라 설정할 수 있는 다양한 방법을 표로 정리해 보겠습니다. 이 표는 각 조건에 맞춰 리소스를 배치할 때 사용하는 디렉터리 명명 규칙을 설명합니다.
+
+
+### 예시 설명
+
+1. 화면 방향:
+    - 기본 세로 모드와 가로 모드에서 각각 다른 레이아웃을 사용합니다.
+    - `res/layout/activity_main.xml`
+    - `res/layout-land/activity_main.xml`
+
+2. 화면 크기:
+    - 작은 화면, 일반 화면, 큰 화면, 매우 큰 화면에서 각각 다른 레이아웃을 사용합니다.
+    - `res/layout/activity_main.xml`
+    - `res/layout-large/activity_main.xml`
+
+3. 화면 밀도:
+    - 다양한 화면 밀도에 따라 다른 이미지를 사용합니다.
+    - `res/drawable-mdpi/icon.png`
+    - `res/drawable-hdpi/icon.png`
+
+4. 언어 및 지역:
+    - 다국어 지원을 위해 언어별로 다른 문자열 리소스를 사용합니다.
+    - `res/values/strings.xml`
+    - `res/values-ko/strings.xml`
+
+5. API 레벨:
+    - 특정 API 레벨 이상에서 다른 리소스를 사용합니다.
+    - `res/values/styles.xml`
+    - `res/values-v21/styles.xml`
+
+
+### 화면 회전 대응하기
+
+-  레이아웃 파일을 적절한 위치에 배치하여 화면 회전에 따라 다른 레이아웃을 사용할 수 있습니다.
+
+- 세로 모드 레이아웃 파일: res/layout/activity_main.xml
+- 가로 모드 레이아웃 파일: res/layout-land/activity_main.xml
+
+### 국제 언어 제공하기
+
+1. 기본 문자열 리소스 정의: `res/values/strings.xml` 파일에 기본 언어로 사용할 문자열을 정의합니다.
+
+2. 다국어 문자열 리소스 추가: `res/values-<language>` 폴더에 해당 언어로 사용할 문자열을 정의합니다. 예를 들어, 한국어는 `res/values-ko/strings.xml` 파일을 사용합니다.
+
+    1. res/values 디렉터리를 마우스 오른쪽 버튼으로 클릭하고, New > Values Resource File을 선택합니다.
+    2. 리소스 파일 생성 : 파일 이름에 strings.xml을 입력하고, Available qualifiers에서 Locale을 선택한 뒤, 오른쪽 화살표 버튼(>>)을 클릭합니다.
+    3. 언어 및 지역 선택 Language에서 ko: Korean을 선택하고, Specific Region Only에서 KR: South Korea를 선택한 후, OK 버튼을 클릭합니다.
+
+3. 레이아웃 파일에서 문자열 리소스 참조: 레이아웃 파일에서 `@string` 리소스를 참조합니다.
+
+4. 시스템 언어 변경하여 테스트: 에뮬레이터 또는 실제 기기에서 시스템 언어를 변경하고, 앱이 해당 언어로 표시되는지 확인합니다.
+
+
+### 에뮬레이터 시스템 설정 변경하기
+
+1. 에뮬레이터 실행: 안드로이드 스튜디오에서 AVD Manager를 통해 에뮬레이터를 실행합니다.
+2. 시스템 설정 열기: 에뮬레이터에서 'Settings' 앱을 엽니다.
+3. 언어 및 입력 설정: 'System' > 'Languages & input' > 'Languages'로 이동합니다.
+4. 언어 추가 및 순서 변경: 원하는 언어를 추가하고, 기본 언어로 설정합니다.
+5. 설정 변경 확인: 시스템 텍스트와 앱의 언어가 변경된 것을 확인합니다.
+
+
+### 기기호환성과 픽셀 단위
+
+#### DP (Density-Independent Pixels)
+- 정의: `dp`는 픽셀 밀도에 독립적인 단위로, 물리적 크기가 일관되게 유지되도록 설계되었습니다. 기본적으로, 160 DPI (dots per inch) 화면에서 1dp는 1px과 같습니다.
+- 사용 목적: `dp`는 대부분의 UI 레이아웃 요소에 사용됩니다 (예: 마진, 패딩, 뷰의 크기 등). 이를 사용하면 다양한 해상도를 가진 디바이스에서도 비슷한 물리적 크기를 유지할 수 있습니다.
+
+#### SP (Scale-Independent Pixels)
+- 정의: `sp`는 `dp`와 유사하되, 사용자가 설정한 글꼴 크기 확대/축소에 따라 조절될 수 있는 단위입니다.
+- 사용 목적: 주로 텍스트의 크기 설정에 사용됩니다. 사용자의 접근성 설정에 따라 텍스트가 자동으로 확대 또는 축소되어야 할 때 유용합니다. 이는 시각 장애가 있는 사용자에게 특히 중요할 수 있습니다.
+
+- [가이드:다양한 픽셀 밀도 지원](https://developer.android.com/training/multiscreen/screendensities?hl=ko)
+- [XML로 정의된 크기 단위](https://developer.android.com/guide/topics/resources/more-resources#Dimension)
+
+
+### 기기 크기 확인하기
+```kt
+        // 기기의 가로 세로 크기 가져오기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // API 버전 30 이상인 경우
+            val windowMetrics = windowManager.currentWindowMetrics
+            val width = windowMetrics.bounds.width()
+            val height = windowMetrics.bounds.height()
+            Log.d("mylog", "기기 너비 : $width, 기기 높이 : $height")
+        } else {
+            // API 버전 30 이하인 경우
+            val display = windowManager.defaultDisplay
+            val displayMetrics = DisplayMetrics()
+            display.getRealMetrics(displayMetrics)
+
+            val width = displayMetrics.widthPixels
+            val height = displayMetrics.heightPixels
+            Log.d("mylog", "기기 너비 : $width, 기기 높이 : $height")
+        }
+```

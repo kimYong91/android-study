@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  색상 리소스를 확인  -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_color">#8BC34A</color>
+    <color name="text_color">#343434</color>
+    <color name="text_bg_color">#FFEB3B</color>
+    <color name="accent_color">#FB0505</color>
+</resources>
