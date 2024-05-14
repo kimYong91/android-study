@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.busanit.ch4_premission"
+    namespace = "com.busanit.ch04_permission"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.busanit.ch4_premission"
+        applicationId = "com.busanit.ch04_permission"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -33,6 +33,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding { enable = true }
+
 }
 
 dependencies {

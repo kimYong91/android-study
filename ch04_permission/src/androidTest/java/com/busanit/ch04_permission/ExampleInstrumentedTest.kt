@@ -1,4 +1,4 @@
-package com.busanit.ch4_premission
+package com.busanit.ch04_permission
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.busanit.ch4_premission", appContext.packageName)
+        assertEquals("com.busanit.ch04_permission", appContext.packageName)
     }
 }

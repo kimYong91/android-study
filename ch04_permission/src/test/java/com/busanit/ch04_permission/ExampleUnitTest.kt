@@ -1,4 +1,4 @@
-package com.busanit.ch4_premission
+package com.busanit.ch04_permission
 
 import org.junit.Test
 
