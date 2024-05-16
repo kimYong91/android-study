@@ -45,7 +45,7 @@ class DialogActivity : AppCompatActivity() {
             val month = calendar.get(Calendar.MONDAY)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            // 사용자가 날짜를 선탣했을 때 수행할 작업
+            // 사용자가 날짜를 선택했을 때 수행할 작업
             val listener = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     // 매개변수 : 사용자로부터 입력받은 연,월,일
@@ -86,20 +86,20 @@ class DialogActivity : AppCompatActivity() {
         binding.button5.setOnClickListener {
             AlertDialog.Builder(this).run {
                 setTitle("체크 박스")
-                setMultiChoiceItems(items, //나타낼 아이탬 목록
-                    // 각 아이템의 선택 여부
+                setMultiChoiceItems(items, // 나타낼 아이탬 목록
+                    // 각 아이템의 선택 여부 *true면 그 부분은 체크 되어 있는 상태로 시작
                     booleanArrayOf(false, false, false, false, false),
                     // 선택시 수행할 작업
                     object : DialogInterface.OnMultiChoiceClickListener {
                         override fun onClick(
                             dialog: DialogInterface?,
                             which: Int,         // 아이템의 인덱스
-                            isChecked: Boolean  // 선탣여부
+                            isChecked: Boolean  // 선택여부
                         ) {
                             binding.textView.text = "${items[which]}가 ${if (isChecked) "선택되었습니다." else "선택해제되었습니다."}"
                         }
                     })
-                setPositiveButton("확인", null).show()
+                setPositiveButton("확인", null).show() // 확인을 누른 후 다음 이벤트를 설정할 필요가 없기 때문에 null을 입력
             }
         }
 
