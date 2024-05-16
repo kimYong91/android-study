@@ -182,6 +182,7 @@ MyAndroidApp/
 
 #### 사용하기
 1. 문자열 리소스: `R.string.resource_name`을 사용하여 문자열 리소스를 참조합니다.
+    - 예를 들어 한국어와 영어를 만들어야 한다면 한국어용 string과 영어용 string의 파일이름과 
 2. 색상 리소스: `ContextCompat.getColor(context, R.color.resource_name)`을 사용하여 색상 리소스를 참조합니다.
 3. 크기 리소스: `getResources().getDimension(R.dimen.resource_name)`을 사용하여 크기 리소스를 참조합니다.
 4. 스타일 리소스: XML 레이아웃 파일에서 `style` 속성을 사용하여 스타일을 적용합니다.
@@ -302,7 +303,7 @@ val okString = getString(android.R.string.ok)
 
 - 리소스 한정자 별 조건 종류 (아래 공식문서 확인)
 - [공식문서 : 리소스 조건 및 한정자 사용하기](https://developer.android.com/guide/topics/resources/providing-resources?hl=ko#QualifierRules)
-  안드로이드에서 리소스를 조건에 따라 설정할 수 있는 다양한 방법을 표로 정리해 보겠습니다. 이 표는 각 조건에 맞춰 리소스를 배치할 때 사용하는 디렉터리 명명 규칙을 설명합니다.
+
 
 
 ### 예시 설명
@@ -398,3 +399,165 @@ val okString = getString(android.R.string.ok)
             Log.d("mylog", "기기 너비 : $width, 기기 높이 : $height")
         }
 ```
+
+## 권한
+
+### 1. 일반 권한 (Normal Permissions)
+
+일반 권한은 민감하지 않은 데이터와 기능에 접근하는 데 필요한 권한입니다. 이 권한들은 앱 설치 시 자동으로 부여되며, 사용자에게 별도의 허가를 요청하지 않아도 됩니다. 일반 권한은 사용자 개인 정보나 장치 보안에 큰 영향을 미치지 않는 기능에 사용됩니다.
+
+- 예시
+
+- 인터넷 접근 권한 (`INTERNET`)
+- 네트워크 상태 확인 권한 (`ACCESS_NETWORK_STATE`)
+- Wi-Fi 상태 확인 권한 (`ACCESS_WIFI_STATE`)
+
+- 선언 방법
+
+일반 권한은 `AndroidManifest.xml` 파일에 선언합니다.
+예를 들어, 인터넷 접근 권한을 선언하려면 아래와 같이 작성합니다.
+
+```xml
+<manifest xmlns:android="<http://schemas.android.com/apk/res/android>"
+    package="com.busanit.myfirstapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Other declarations -->
+
+</manifest>
+
+```
+
+### 2. 위험 권한 (Dangerous Permissions)
+
+위험 권한은 민감한 데이터나 장치 기능에 접근할 때 필요한 권한입니다. 이러한 권한들은 사용자의 개인 정보나 장치 보안에 큰 영향을 미칠 수 있기 때문에, 사용자가 명시적으로 허가해야 합니다. 앱 실행 중에 사용자가 허가를 승인하거나 거부할 수 있습니다.
+
+- 예시
+
+    - 위치 정보 접근 권한 (`ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`)
+    - 카메라 사용 권한 (`CAMERA`)
+    - 연락처 접근 권한 (`READ_CONTACTS`, `WRITE_CONTACTS`)
+    - 저장소 접근 권한 (`READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`)
+
+### 권한 요청 처리 절차
+
+1. 권한 선언: `AndroidManifest.xml` 파일에 필요한 권한을 선언합니다.
+2. 권한 확인: 앱 실행 시 `ContextCompat.checkSelfPermission()` 메서드로 권한을 확인합니다.
+3. 권한 요청: 권한이 부여되지 않은 경우 `ActivityCompat.requestPermissions()` 메서드로 사용자에게 권한을 요청합니다.
+4. 결과 처리: `onRequestPermissionsResult()` 메서드에서 권한 요청 결과를 처리합니다.
+
+#### 선언 및 요청 방법
+
+1. 권한 선언: `AndroidManifest.xml` 파일에 위험 권한을 선언합니다.
+
+    ```xml
+    <manifest xmlns:android="<http://schemas.android.com/apk/res/android>"
+        package="com.busanit.myfirstapp">
+    
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+        <!-- Other declarations -->
+    
+    </manifest>
+    
+    ```
+
+2. 권한 요청: 앱 실행 중에 권한을 요청합니다. 예를 들어, 위치 권한을 요청하려면 아래와 같이 작성합니다.
+
+    ```kotlin
+    import android.Manifest
+    import android.content.pm.PackageManager
+    import androidx.core.app.ActivityCompat
+    import androidx.core.content.ContextCompat
+    
+    class MainActivity : AppCompatActivity() {
+    
+        private val LOCATION_PERMISSION_REQUEST_CODE = 1
+    
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
+    
+            // 위치 권한 요청
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+    
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+            }
+        }
+    
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // 권한이 승인된 경우
+                    // 위치 정보를 얻는 코드 작성
+                    Toast.makeText(this, "위치 권한이 승인되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    // 권한이 거부된 경우
+                    Toast.makeText(this, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    
+    ```
+
+
+### 대표적인 안드로이드 시스템 권한
+
+1. 위치 권한 (Location Permissions)
+    - `ACCESS_FINE_LOCATION`: GPS를 통해 정확한 위치 정보를 접근할 수 있는 권한
+    - `ACCESS_COARSE_LOCATION`: Wi-Fi 및 기지국 정보를 통해 대략적인 위치 정보를 접근할 수 있는 권한
+2. 카메라 권한 (Camera Permissions)
+    - `CAMERA`: 카메라 하드웨어에 접근하여 사진 및 비디오를 촬영할 수 있는 권한
+3. 연락처 권한 (Contacts Permissions)
+    - `READ_CONTACTS`: 사용자의 연락처 데이터를 읽을 수 있는 권한
+    - `WRITE_CONTACTS`: 사용자의 연락처 데이터를 수정할 수 있는 권한
+    - `GET_ACCOUNTS`: 기기에 등록된 계정 목록에 접근할 수 있는 권한
+4. 전화 권한 (Phone Permissions)
+    - `READ_PHONE_STATE`: 전화 상태와 관련된 정보를 읽을 수 있는 권한
+    - `CALL_PHONE`: 전화를 걸 수 있는 권한
+    - `READ_CALL_LOG`: 전화 기록을 읽을 수 있는 권한
+    - `WRITE_CALL_LOG`: 전화 기록을 수정할 수 있는 권한
+    - `ADD_VOICEMAIL`: 음성 메일을 추가할 수 있는 권한
+    - `USE_SIP`: SIP 통화를 사용할 수 있는 권한
+    - `PROCESS_OUTGOING_CALLS`: 발신 전화를 처리할 수 있는 권한
+5. 저장소 권한 (Storage Permissions)
+    - `READ_EXTERNAL_STORAGE`: 외부 저장소의 파일을 읽을 수 있는 권한
+    - `WRITE_EXTERNAL_STORAGE`: 외부 저장소의 파일을 쓸 수 있는 권한
+6. 마이크 권한 (Microphone Permissions)
+    - `RECORD_AUDIO`: 마이크를 통해 오디오를 녹음할 수 있는 권한
+7. SMS 권한 (SMS Permissions)
+    - `SEND_SMS`: SMS 메시지를 보낼 수 있는 권한
+    - `RECEIVE_SMS`: SMS 메시지를 받을 수 있는 권한
+    - `READ_SMS`: SMS 메시지를 읽을 수 있는 권한
+    - `RECEIVE_WAP_PUSH`: WAP 푸시 메시지를 받을 수 있는 권한
+    - `RECEIVE_MMS`: MMS 메시지를 받을 수 있는 권한
+8. 캘린더 권한 (Calendar Permissions)
+    - `READ_CALENDAR`: 사용자의 캘린더 데이터를 읽을 수 있는 권한
+    - `WRITE_CALENDAR`: 사용자의 캘린더 데이터를 수정할 수 있는 권한
+9. 센서 권한 (Sensors Permissions)
+    - `BODY_SENSORS`: 심박수와 같은 신체 센서 데이터를 접근할 수 있는 권한
+10. 위치에 따른 네트워크 상태 권한 (Network State Permissions)
+    - `ACCESS_NETWORK_STATE`: 네트워크 연결 상태를 확인할 수 있는 권한
+    - `ACCESS_WIFI_STATE`: Wi-Fi 연결 상태를 확인할 수 있는 권한
+    - `CHANGE_WIFI_STATE`: Wi-Fi 연결 상태를 변경할 수 있는 권한
+11. 기타 권한 (Other Permissions)
+    - `INTERNET`: 인터넷에 접근할 수 있는 권한
+    - `BLUETOOTH`: 블루투스 연결을 사용할 수 있는 권한
+    - `BLUETOOTH_ADMIN`: 블루투스 설정을 변경할 수 있는 권한
+    - `NFC`: NFC 하드웨어에 접근할 수 있는 권한
+    - `VIBRATE`: 장치를 진동시킬 수 있는 권한
+    - `WAKE_LOCK`: CPU가 슬립 모드로 들어가지 않도록 할 수 있는 권한
+
+### 공식 문서 참조
+
+- [Permissions Overview](https://developer.android.com/guide/topics/permissions/overview)
+- [Requesting Permissions at Run Time](https://developer.android.com/training/permissions/requesting)
+- [Manifest.permission](https://developer.android.com/reference/android/Manifest.permission)
+
+---
