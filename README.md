@@ -956,3 +956,291 @@ customDialog.show()
 - NotificationCompat.Builder: [NotificationCompat.Builder](https://developer.android.com/reference/androidx/core/app/NotificationCompat.Builder)
 - NotificationManager: [NotificationManager](https://developer.android.com/reference/android/app/NotificationManager)
 - NotificationChannel: [NotificationChannel](https://developer.android.com/reference/android/app/NotificationChannel)
+
+## Jetpack 라이브러리
+
+- Jetpack은 안드로이드 앱 개발을 단순화하고 고품질 앱을 쉽게 만들 수 있도록 도와주는 라이브러리 모음입니다. Jetpack 라이브러리는 코드의 재사용성을 높이고, 보일러플레이트 코드를 줄이며, 앱의 성능과 안정성을 향상시킵니다.
+- androidx 네임스페이스는 Android Jetpack 라이브러리로 구성됩니다.
+- androidX의 모든 패키지는 androidx라는 문자열로 시작하는 일관된 네임스페이스에 있습니다.
+- androidx 네임스페이스에 있는 라이브러리는 지원 라이브러리와 마찬가지로 Android 플랫폼과 별도로 제공되며 Android 출시 버전 전체에서 이전 버전과 호환됩니다.
+
+#### 기본
+
+- AppCompat: 하위 호환성을 제공하여 최신 안드로이드 기능을 모든 버전에서 사용할 수 있게 합니다.
+- Android KTX: 코틀린을 위한 확장 기능을 제공하여 코틀린 코드의 가독성과 생산성을 향상시킵니다.
+
+#### UI
+
+- ConstraintLayout: 복잡한 레이아웃을 간단하게 정의할 수 있습니다.
+- Fragment: 모듈화된 UI 컴포넌트를 구현합니다.
+- RecyclerView: 대량의 데이터를 효율적으로 표시합니다.
+- ViewPager2: 스와이프로 넘기는 화면을 구성합니다.
+- Drawerlayout: 옆에서 서랍처럼 열리는 화면을 구성합니다.
+
+- 기타 많은 기능을 지원
+
+### Jetpack 라이브러리의 이점
+
+1. 생산성 향상: 보일러플레이트 코드를 줄이고, 개발 속도를 높입니다.
+2. 품질 향상: 테스트 가능하고, 유지 보수하기 쉬운 코드를 작성할 수 있습니다.
+3. 안정성 향상: 다양한 안드로이드 버전에서 일관된 동작을 보장합니다.
+4. 최신 기술: 최신 안드로이드 기능과 디자인 패턴을 쉽게 도입할 수 있습니다.
+
+---
+
+### 참고 자료
+
+- [Android Jetpack 공식 문서](https://developer.android.com/jetpack)
+- [Jetpack 컴포넌트 개요](https://developer.android.com/jetpack/androidx)
+
+---
+
+## 안드로이드 테마 설정
+
+테마는 앱의 전체적인 룩앤필을 정의하는 중요한 요소입니다. 색상, 글꼴, 스타일 등을 지정하여 일관된 디자인을 유지할 수 있습니다.
+
+#### 테마 설정 방법
+
+Step 1: 기본 테마 정의
+
+`res/values/styles.xml` 파일에서 기본 테마를 정의합니다.
+```xml
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>
+```
+
+Step 2: 색상 정의
+
+`res/values/colors.xml` 파일에서 테마에 사용할 색상을 정의합니다.
+```xml
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorText">#000000</color>
+</resources>
+```
+
+Step 3: 테마 적용
+
+`AndroidManifest.xml` 파일에서 정의한 테마를 앱에 적용합니다.
+```xml
+<application
+    android:theme="@style/AppTheme"
+    ... >
+    ...
+</application>
+```
+
+#### 1.3 커스텀 테마 추가
+
+Step 1: 새로운 테마 정의
+
+`res/values/styles.xml` 파일에 커스텀 테마를 추가합니다.
+```xml
+<resources>
+    <!-- Custom theme -->
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+</resources>
+```
+
+Step 2: 액티비티에 커스텀 테마 적용
+
+특정 액티비티에 커스텀 테마를 적용하려면 `AndroidManifest.xml` 파일에서 해당 액티비티에 테마를 지정합니다.
+```xml
+<activity android:name=".CustomActivity"
+    android:theme="@style/CustomTheme">
+    ...
+</activity>
+```
+
+#### 테마 컬러 항목
+
+1. colorPrimary
+- 적용 위치: 앱의 주요 색상으로, 주로 앱 바(Action Bar), 툴바(Toolbar), 상태바(Status Bar) 등에 사용됩니다.
+- 예시: 앱 바의 배경색, 버튼의 기본 색상 등.
+
+2. colorPrimaryDark
+- 적용 위치: 앱의 주요 색상이 좀 더 어두운 색상으로, 주로 상태바(Status Bar)와 일부 앱 바(Toolbar)의 배경색으로 사용됩니다.
+- 예시: 상태바의 배경색, 앱 바의 어두운 변형.
+
+3. colorAccent
+- 적용 위치: 강조 색상으로, 앱 내의 중요한 인터랙티브 요소에 사용됩니다. 버튼, 스위치, 체크박스, 프로그레스 바 등의 강조 색상으로 사용됩니다.
+- 예시: 버튼의 강조 색상, 스위치의 활성화 색상, 체크박스의 체크 색상 등.
+
+4. android:windowBackground
+- 적용 위치: 앱의 기본 배경 색상으로, 모든 액티비티와 창의 배경색으로 사용됩니다.
+- 예시: 액티비티의 기본 배경 색상, 팝업 창의 배경 색상 등.
+
+5. android:textColor
+- 적용 위치: 앱의 기본 텍스트 색상으로, 모든 텍스트 뷰(TextView), 버튼(Button) 등의 기본 텍스트 색상으로 사용됩니다.
+- 예시: TextView의 텍스트 색상, 버튼의 텍스트 색상 등.
+
+- 기타 등등...
+
+### 참고 자료
+
+- [Android Developers - Styles and Themes](https://developer.android.com/guide/topics/ui/look-and-feel/themes)
+- [Material Design - Color](https://material.io/design/color)
+
+
+---
+
+## App Bar
+
+- AppBar: 앱의 상단에 위치하며, 주로 앱의 제목, 네비게이션 아이콘, 메뉴 등을 포함하는 영역입니다.
+
+- ActionBar: 안드로이드에서 기본적으로 제공되는 상단 바 컴포넌트로, AppCompatActivity에 의해 자동으로 관리됩니다. Activity의 상태 및 주요 기능을 사용자에게 제공하는 역할을 합니다.
+
+    - 제목과 부제목 표시: 현재 화면의 제목과 부제목을 설정할 수 있습니다.
+    - 네비게이션 아이콘: 뒤로 가기 또는 홈으로 이동하는 아이콘을 추가할 수 있습니다.
+    - 액션 아이템(메뉴 아이템): 자주 사용하는 기능을 빠르게 접근할 수 있도록 메뉴를 추가할 수 있습니다.
+
+
+- Toolbar: AppBar의 구체적인 구현체로, 앱의 상단 바 역할을 합니다. 더 유연하고 커스터마이징이 가능하여 XML 레이아웃 파일에 직접 추가할 수 있습니다.
+
+---
+
+### 설정
+
+#### Step 1: AppCompatActivity 사용
+
+`AppCompatActivity`를 상속하는 액티비티를 사용하여 Action Bar를 설정합니다.
+
+#### Step 2: 테마 설정
+
+`res/values/styles.xml` 파일에서 앱의 테마를 설정합니다:
+```xml
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>
+```
+
+#### Step 3: 레이아웃 파일 설정
+
+`res/layout/activity_main.xml` 파일을 생성하거나 수정합니다:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- 다른 UI 요소들을 추가 -->
+
+</LinearLayout>
+```
+
+#### Step 4: 액티비티에서 Action Bar 설정
+
+`MainActivity.kt` 파일에서 Action Bar를 설정하고 커스터마이징합니다:
+```kotlin
+package com.busanit.myapp
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Action Bar 설정
+        supportActionBar?.apply {
+            title = "메인 화면" // Action Bar 제목 설정
+            subtitle = "서브 타이틀" // Action Bar 부제목 설정
+            setDisplayHomeAsUpEnabled(true) // 네비게이션 아이콘 설정
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24) // 네비게이션 아이콘 커스터마이징
+        }
+    }
+}
+```
+
+---
+
+## 메뉴 항목 추가 및 처리
+
+#### Step 1: 메뉴 리소스 파일 생성
+
+- 메뉴 : 메뉴 항목은 사용자가 특정 작업을 수행할 수 있도록 하는 인터페이스 요소입니다. 메뉴 항목은 보통 액션 바(Action Bar) 또는 툴바(Toolbar)에 표시됩니다.
+
+`res/menu/menu_main.xml` 파일을 생성합니다:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        android:showAsAction="never"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Favorite"
+        android:showAsAction="ifRoom"/>
+</menu>
+```
+
+- `showAsAction` 속성
+    1. never : 메뉴 항목을 항상 오버플로우 메뉴(더보기 메뉴)에 표시합니다.
+    2. ifRoom : 메뉴 항목을 공간이 있을 경우 액션 바나 툴바에 표시하고, 공간이 부족하면 오버플로우 메뉴에 표시합니다.
+    3. always : 항상 액션 바나 툴바에 메뉴 항목을 표시합니다. 이 옵션은 남용되지 않아야 하며, 주로 중요한 액션에만 사용해야 합니다.
+    4. withText : 아이콘과 함께 텍스트를 표시합니다. 이 옵션은 ifRoom 또는 always와 함께 사용됩니다.
+    5. collapseActionView :메뉴 항목이 액션 뷰를 확장 및 축소할 수 있도록 합니다. 주로 검색이나 기타 액션 뷰에 사용됩니다.
+
+#### Step 2: 메뉴 인플레이트
+
+`___Activity.kt` 파일에서 메뉴를 인플레이트하고 항목 클릭 이벤트를 처리합니다:
+```kotlin
+override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_main, menu)
+    return true
+}
+
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+        R.id.action_settings -> {
+            // 설정 메뉴 클릭 처리
+            true
+        }
+        R.id.action_favorite -> {
+            // 즐겨찾기 메뉴 클릭 처리
+            true
+        }
+        android.R.id.home -> {
+            // 네비게이션 아이콘 클릭 처리
+            finish() // 현재 액티비티 종료
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+}
+```
+
+
+### 참고 자료
+
+- [Android Developers: Menus 추가](https://developer.android.com/develop/ui/views/components/menus?hl=ko)
+- [Android ActionBar 사용 가이드](https://developer.android.com/guide/topics/ui/actionbar)
+- [Material Design의 App Bar](https://material.io/components/app-bars-top)
