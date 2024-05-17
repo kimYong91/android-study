@@ -24,7 +24,7 @@ class UpSecondActivity : AppCompatActivity() {
         when (item.itemId) {
             // 선택한 아이템 = 홈 버튼의 플랫폼 아이디
             android.R.id.home -> {
-                // 업 버튼이 눌렀을 때 종작을 정의
+                // 업 버튼이 눌렀을 때 동작을 정의
                 finish()       // 현재 Activity 종료
             }
         }
