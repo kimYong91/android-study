@@ -15,6 +15,7 @@ class ToolBarActivity : AppCompatActivity() {
         binding.toolbar.run {
             title = "툴 바"
             setTitleTextColor(Color.WHITE)
+            inflateMenu(R.menu.menu1)
             setOnMenuItemClickListener{
                 when (it.itemId) {
                     R.id.item1 -> {
