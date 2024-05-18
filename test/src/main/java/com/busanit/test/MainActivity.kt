@@ -21,17 +21,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.search -> {
-                Toast.makeText(this, "서치", Toast.LENGTH_LONG).show()
-            }
-            R.id.settings -> {
-                Toast.makeText(this, "세팅", Toast.LENGTH_LONG).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.search -> {
+//                Toast.makeText(this, "서치", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.settings -> {
+//                Toast.makeText(this, "세팅", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
 /*
 #### 문제
