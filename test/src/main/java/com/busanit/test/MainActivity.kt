@@ -2,6 +2,8 @@ package com.busanit.test
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.busanit.test.databinding.ActivityMainBinding
 
@@ -16,6 +18,19 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ChildActivity::class.java)
             startActivity(intent)
         }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                Toast.makeText(this, "서치", Toast.LENGTH_LONG).show()
+            }
+            R.id.settings -> {
+                Toast.makeText(this, "세팅", Toast.LENGTH_LONG).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 /*
