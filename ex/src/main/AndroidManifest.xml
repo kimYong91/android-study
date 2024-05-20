@@ -9,7 +9,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidstudy">
         <activity
-            android:name=".bundle.CounterActivity"
+            android:name=".ex2.Second2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ex2.Main2Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,22 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".intent.Intent2Activity"
+            android:name=".ex1.Second1Activity"
             android:exported="false" />
         <activity
-            android:name=".intent.Intent1Activity"
-            android:exported="false" />
-        <activity
-            android:name=".life_cycle.LifecycleActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
+            android:name=".ex1.Main1Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

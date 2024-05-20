@@ -22,7 +22,7 @@ class ChildActivity : AppCompatActivity() {
 
 
 
-        supportActionBar?.setHomeButtonEnabled(true)
+//        supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

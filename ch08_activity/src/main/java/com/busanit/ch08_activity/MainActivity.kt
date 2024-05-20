@@ -3,6 +3,8 @@ package com.busanit.ch08_activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.busanit.ch08_activity.databinding.ActivityMainBinding
 import com.busanit.ch08_activity.intent.Intent1Activity
@@ -82,6 +84,33 @@ class MainActivity : AppCompatActivity() {
                 // 해당 액티비티를 시작하고 결과를 요청
                 // 두번째 매개변수 : 요청코드
                 startActivityForResult(intent, 10)
+            }
+
+            // Result API
+            // Contract 객체를 생성 : 다른 Acitvity에 갔다 올 경우
+            val contract = ActivityResultContracts.StartActivityForResult()
+            // Launcher 객체를 생성 (contract, callback함수)
+            val launcher = registerForActivityResult(contract) {
+                // CallBack 함수 : 돌아왔을 때 코드를 구현
+                Toast.makeText(this@MainActivity, "다른 액티비티 갔다가 돌아왔습니다.", Toast.LENGTH_SHORT).show()
+
+                // it : ActivityResult 객체
+                // it.resultCode : 결과 코드
+                // it.data : 결과 데이터
+                if (it.resultCode == RESULT_OK) {
+                    val result = it.data?.getStringExtra("result_msg")
+                    textView.text = result
+                }
+            }
+
+            // Result API 사용
+            button8.setOnClickListener {
+                // 인텐트 객체 생성
+                val intent = Intent(this@MainActivity, Intent2Activity::class.java)
+                intent.putExtra("extra_msg", "Result API에서 보낸 메시지")
+
+                // ActivityResultLauncher 시작
+                launcher.launch(intent)
             }
         }
     }
