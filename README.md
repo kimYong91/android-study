@@ -1676,3 +1676,33 @@ class MainActivity : AppCompatActivity() {
 ```
 
 ---
+
+#### notify 메서드
+`RecyclerView.Adapter`의 `notify` 메서드들은 다양한 데이터 변경 이벤트를 `RecyclerView`에 알리는 역할을 합니다.
+
+
+```kotlin
+// 전체 데이터 세트가 변경되었을 때
+adapter.notifyDataSetChanged()
+
+// 특정 위치의 아이템이 변경되었을 때
+adapter.notifyItemChanged(2)
+
+// 새로운 아이템이 특정 위치에 삽입되었을 때
+adapter.notifyItemInserted(1)
+
+// 특정 위치의 아이템이 제거되었을 때
+adapter.notifyItemRemoved(3)
+
+// 특정 범위의 아이템이 변경되었을 때
+adapter.notifyItemRangeChanged(1, 3)
+
+// 새로운 아이템이 특정 범위에 삽입되었을 때
+adapter.notifyItemRangeInserted(0, 2)
+
+// 특정 범위의 아이템이 제거되었을 때
+adapter.notifyItemRangeRemoved(1, 4)
+
+// 아이템이 한 위치에서 다른 위치로 이동되었을 때
+adapter.notifyItemMoved(2, 5)
+```
