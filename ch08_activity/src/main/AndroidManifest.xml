@@ -9,6 +9,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidstudy">
         <activity
+            android:name="com.busanit.ch08_activity.stack.ThreeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.busanit.ch08_activity.stack.TwoActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.busanit.ch08_activity.stack.OneActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".bundle.CounterActivity"
             android:exported="true">
             <intent-filter>
