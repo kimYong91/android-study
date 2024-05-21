@@ -1498,3 +1498,181 @@ ActivityResultContracts는 다양한 기본 계약을 제공합니다. 다음은
 #### 태스크(Task)와 백스택(Back Stack)
 - 태스크는 사용자 작업의 논리적인 단위로, 여러 액티비티로 구성될 수 있습니다. 예를 들어, 이메일 작성, 전송, 확인 등의 작업이 하나의 태스크를 구성할 수 있습니다.
 - 백스택은 액티비티 스택의 또 다른 표현으로, 사용자가 이전에 방문한 액티비티의 기록을 담고 있어 사용자가 뒤로 가기 버튼을 눌렀을 때 이전 액티비티로 돌아갈 수 있게 합니다.
+
+### RecyclerView 개념 정리 표
+
+| 항목                | 설명                                                                                      |
+|-------------------------|-----------------------------------------------------------------------------------------------|
+| RecyclerView        | 데이터를 효율적으로 표시하고 스크롤 성능을 최적화하기 위해 설계된 리스트 뷰.                         |
+| Adapter             | 데이터를 ViewHolder에 바인딩하는 역할.                                                           |
+| ViewHolder          | 각 데이터 항목의 뷰를 보유하는 역할.                                                            |
+| LayoutManager       | 데이터 항목의 배치를 관리.                                                                     |
+| ItemDecoration      | RecyclerView 항목 사이에 간격을 추가하거나 구분선을 그리는 등의 장식을 추가하는 클래스.                 |
+| LayoutManager 종류  | LinearLayoutManager, GridLayoutManager, StaggeredGridLayoutManager.                          |
+| 클릭 이벤트 처리    | 항목 클릭 이벤트를 처리하려면 ViewHolder에 클릭 리스너를 추가.                                      |
+| ItemDecoration 종류 | 기본 제공 DividerItemDecoration, 커스텀 ItemDecoration.                                       |
+
+---
+
+### RecyclerView 구성 요소
+
+| 구성 요소       | 역할 및 설명                                                                                  |
+|---------------------|--------------------------------------------------------------------------------------------------|
+| RecyclerView    | 데이터를 효율적으로 표시하기 위한 컨테이너 뷰.                                                    |
+| Adapter         | 데이터를 개별 ViewHolder에 바인딩하는 역할.                                                       |
+| ViewHolder      | 각 항목의 뷰를 보유하고 재사용을 관리.                                                            |
+| LayoutManager   | RecyclerView 내의 항목 배치를 관리.                                                               |
+| ItemDecoration  | 항목 간의 간격, 구분선 등 추가적인 장식을 관리.                                                   |
+
+---
+
+### LayoutManager 종류
+
+| LayoutManager               | 설명                                                                                       |
+|---------------------------------|----------------------------------------------------------------------------------------------|
+| LinearLayoutManager         | 세로 또는 가로 방향의 리스트를 만듭니다.                                                       |
+| GridLayoutManager           | 그리드 형태의 레이아웃을 만듭니다.                                                           |
+| StaggeredGridLayoutManager  | 불규칙한 크기의 항목을 가진 그리드 레이아웃을 만듭니다.                                      |
+
+---
+
+### ItemDecoration
+
+| ItemDecoration 종류         | 설명                                                                                       |
+|---------------------------------|----------------------------------------------------------------------------------------------|
+| DividerItemDecoration       | 기본 구분선 ItemDecoration.                                                                   |
+| 커스텀 ItemDecoration       | 개발자가 정의한 간격이나 구분선을 추가.                                                      |
+
+---
+
+### RecyclerView 설정 예제
+
+| 설정 단계               | 설명 및 코드 예제                                                                         |
+|-----------------------------|---------------------------------------------------------------------------------------------|
+| 레이아웃 파일에 추가     | `res/layout/activity_main.xml` 파일에 RecyclerView 추가.                                       |
+| 데이터 모델 생성         | 데이터를 표현할 간단한 모델 클래스 생성 (`Item.kt`).                                            |
+| ViewHolder와 Adapter 생성| RecyclerView 항목을 보유하고 데이터를 바인딩하는 클래스 생성 (`ItemAdapter.kt`).                    |
+| 아이템 레이아웃 파일 생성| 각 항목의 레이아웃 정의 (`res/layout/item_layout.xml`).                                         |
+| RecyclerView 설정        | `MainActivity.kt` 파일에서 RecyclerView 설정 및 Adapter 연결.                                    |
+| ItemDecoration 추가      | `MainActivity.kt` 파일에서 기본 구분선 또는 커스텀 간격 추가.                                    |
+
+---
+
+### RecyclerView 설정 예제 코드
+
+#### dependencies 추가
+```kotlin
+dependencies {
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+}
+```
+
+#### activity_main.xml
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+```
+
+#### Item.kt
+```kotlin
+package com.example.myapp
+
+data class Item(val title: String)
+```
+
+#### ItemAdapter.kt
+```kotlin
+package com.example.myapp
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+
+class ItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+
+    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val titleTextView: TextView = itemView.findViewById(R.id.item_title)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+        return ItemViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val item = items[position]
+        holder.titleTextView.text = item.title
+    }
+
+    override fun getItemCount() = items.size
+}
+```
+
+#### item_layout.xml
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
+</LinearLayout>
+```
+
+#### MainActivity.kt
+```kotlin
+package com.example.myapp
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.myapp.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        // 샘플 데이터 생성
+        val items = listOf(
+            Item("Item 1"),
+            Item("Item 2"),
+            Item("Item 3"),
+            Item("Item 4"),
+            Item("Item 5")
+        )
+
+        // RecyclerView 설정
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = ItemAdapter(items)
+
+        // DividerItemDecoration 추가
+        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager.VERTICAL)
+        binding.recyclerView.addItemDecoration(dividerItemDecoration)
+    }
+}
+```
+
+---

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.*
 import com.busanit.ch09_recycler_view.R
 import com.busanit.ch09_recycler_view.databinding.ActivityRecyclerViewBinding
 import com.busanit.ch09_recycler_view.databinding.CarItemBinding
@@ -42,7 +41,7 @@ class RecyclerViewActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         binding.recyclerView.addItemDecoration(itemDecoration)
 
-        // 커스텀 데코레이션
+        // 커스텀 데코레이션 클래스 작성
         class CustomItemDecoration(val space: Int) : RecyclerView.ItemDecoration() {
             // 아이템 항목 간 간격
             override fun getItemOffsets(
@@ -58,6 +57,13 @@ class RecyclerViewActivity : AppCompatActivity() {
                 outRect.bottom = space
             }
         }
+
+        // 리소스에서 단위 가져오기 (16dp)
+        val spaceDimen = resources.getDimensionPixelSize(R.dimen.item_space)
+
+        // 데코레이션 객체 생성하여 리사이클러뷰에 투가
+        val customSpaceItemDecotation = CustomItemDecoration(spaceDimen)
+        binding.recyclerView.addItemDecoration(customSpaceItemDecotation)
     }
 }
 
