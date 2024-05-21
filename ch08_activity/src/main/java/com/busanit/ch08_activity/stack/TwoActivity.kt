@@ -16,7 +16,7 @@ class TwoActivity : AppCompatActivity() {
             }
             twoTextView2.setOnClickListener{
                 val intent = Intent(this@TwoActivity, TwoActivity::class.java)
-                // SINGLE_TOP : 동일한 액티비티가 스택의 맨 위에 존재하면 기좀 인스턴스 재사용,
+                // SINGLE_TOP : 동일한 액티비티가 스택의 맨 위에 존재하면 기존 인스턴스 재사용, 불필요한 인스턴스 생성 방지
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                 startActivity(intent)
