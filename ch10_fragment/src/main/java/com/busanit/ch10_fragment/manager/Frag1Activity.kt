@@ -12,9 +12,8 @@ class Frag1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // 프레그먼트 추가
+        // 프래그먼트 추가
         binding.addButton.setOnClickListener {
-
             // 관리자를 통해 트랜잭션 시작
             val transaction = supportFragmentManager.beginTransaction()
 
@@ -25,7 +24,7 @@ class Frag1Activity : AppCompatActivity() {
             }
         }
 
-        // 프레그먼트 교체
+        // 프래그먼트 교체
         binding.replaceButton.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
 
@@ -36,15 +35,16 @@ class Frag1Activity : AppCompatActivity() {
             }
         }
 
-        // 프레그먼트 삭제
+        // 프래그먼트 삭제
         binding.removeButton.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
 
-            // 컨테이너 리소스 ID를 기준으로 현제 사용하고 있는 프레그먼트를 찾는다.
-            val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+            // 컨테이너 리소스 ID를 기준으로 현재 사용하고 있는 프래그먼트를 찾는다.
+            val fragment =
+                supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
 
             transaction.run {
-                // 찾아낸 프레그먼트 제거
+                // 찾아낸 프래그먼트 제거
                 if (fragment != null) {
                     remove(fragment)
                 }

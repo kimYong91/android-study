@@ -5,11 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".data.DataActivity">
 
-    <!--  레이아웃에 컨테이너 추가  -->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_data_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
