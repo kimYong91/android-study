@@ -1806,3 +1806,40 @@ Fragment는 Android 애플리케이션의 UI와 동작을 모듈화하고 재사
 ### 참고 문서
 
 - [Fragment 공식 문서](https://developer.android.com/guide/fragments)
+
+#### Fragment 생명주기
+
+Fragment는 Activity와 유사한 생명주기를 가지지만, 몇 가지 차이점이 있습니다. 아래는 주요 생명주기 메서드와 그 역할을 설명합니다.
+
+- onAttach(): Fragment가 Activity에 추가될 때 호출됩니다.
+- onCreate(): Fragment가 생성될 때 호출됩니다. 초기 설정 작업을 수행합니다.
+- onCreateView(): Fragment의 UI를 처음 생성할 때 호출됩니다. 레이아웃을 인플레이트합니다.
+- onViewCreated(): 뷰가 생성되고 나서 호출됩니다. 뷰의 초기 설정 작업을 수행합니다.
+- onStart(): Fragment가 사용자에게 보이기 시작할 때 호출됩니다.
+- onResume(): Fragment가 사용자와 상호작용을 시작할 때 호출됩니다.
+- onPause(): Fragment가 사용자와 상호작용을 중지할 때 호출됩니다.
+- onStop(): Fragment가 더 이상 사용자에게 보이지 않을 때 호출됩니다.
+- onDestroyView(): Fragment의 뷰가 제거될 때 호출됩니다.
+- onDestroy(): Fragment가 파괴될 때 호출됩니다.
+- onDetach(): Fragment가 Activity에서 분리될 때 호출됩니다.
+
+#### FragmentManager
+
+FragmentManager는 Fragment를 관리하고, Fragment 간의 트랜잭션을 수행하는 데 사용됩니다. FragmentManager는 Fragment를 추가, 교체, 제거하는 작업을 처리하며, Fragment 트랜잭션의 백스택을 관리할 수도 있습니다.
+
+FragmentManager를 사용하여 Fragment를 관리하는 주요 메서드는 다음과 같습니다:
+- `beginTransaction()`: Fragment 트랜잭션을 시작합니다.
+- `findFragmentById(int)`: 특정 ID를 가진 Fragment를 찾습니다.
+- `findFragmentByTag(String)`: 특정 태그를 가진 Fragment를 찾습니다.
+- `popBackStack()`: 백스택에서 가장 최근의 트랜잭션을 팝(제거)합니다.
+
+#### FragmentTransaction
+
+FragmentTransaction은 Fragment의 추가, 교체, 제거 등의 작업을 수행하는 데 사용됩니다. 각 트랜잭션은 일련의 작업으로 구성되며, `commit()`을 호출하여 트랜잭션을 완료합니다.
+
+FragmentTransaction의 주요 메서드는 다음과 같습니다:
+- `add(int, Fragment)`: 특정 컨테이너 뷰에 Fragment를 추가합니다.
+- `replace(int, Fragment)`: 특정 컨테이너 뷰의 기존 Fragment를 새 Fragment로 교체합니다.
+- `remove(Fragment)`: Fragment를 제거합니다.
+- `addToBackStack(String)`: 트랜잭션을 백스택에 추가하여 뒤로 가기 버튼을 통해 되돌릴 수 있게 합니다.
+- `commit()`: 트랜잭션을 완료하고 변경 사항을 적용합니다.
