@@ -15,6 +15,9 @@ class PagerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.pager2.adapter = Adapter(this)
+
+        // 스크롤 방향을 수직 방향으로 설정
+        //binding.pager2.orientation = ViewPager2.ORIENTATION_VERTICAL
     }
 
     // ViewPager2 어댑터
