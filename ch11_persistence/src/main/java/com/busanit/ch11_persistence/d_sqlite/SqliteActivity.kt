@@ -15,7 +15,7 @@ class SqliteActivity : AppCompatActivity() {
         binding = ActivitySqliteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dbHelper = DBHelper(this)   // DB 헬퍼 객체 생성
+        dbHelper = DBHelper(this@SqliteActivity)   // DB 헬퍼 객체 생성
 
         binding.run {
 
