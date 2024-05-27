@@ -1843,3 +1843,37 @@ FragmentTransaction의 주요 메서드는 다음과 같습니다:
 - `remove(Fragment)`: Fragment를 제거합니다.
 - `addToBackStack(String)`: 트랜잭션을 백스택에 추가하여 뒤로 가기 버튼을 통해 되돌릴 수 있게 합니다.
 - `commit()`: 트랜잭션을 완료하고 변경 사항을 적용합니다.
+
+### ViewPager2 & TabLayout
+
+#### 개념
+
+TabLayout과 ViewPager2는 안드로이드에서 탭 기반 네비게이션을 구현할 때 사용되는 두 가지 주요 구성 요소입니다. TabLayout은 탭을 통해 여러 화면을 전환할 수 있는 사용자 인터페이스를 제공하고, ViewPager2는 사용자가 스와이프 제스처를 통해 여러 페이지를 탐색할 수 있도록 합니다.
+
+#### 주요 개념
+
+- TabLayout: 사용자가 선택할 수 있는 탭의 집합을 제공합니다. 탭은 일반적으로 상단에 위치하며, ViewPager2와 연동하여 화면 전환을 관리합니다.
+- ViewPager2: RecyclerView 기반의 새로운 ViewPager로, 여러 페이지를 스와이프를 통해 전환할 수 있게 합니다. FragmentStateAdapter를 통해 각 페이지에 해당하는 Fragment를 관리합니다.
+- FragmentStateAdapter: ViewPager2와 함께 사용되며, 각 페이지에 해당하는 Fragment를 생성하고 관리합니다.
+
+#### ViewPager2 주요 메서드
+
+| 메서드/속성                  | 설명                                                        |
+|------------------------------|-------------------------------------------------------------|
+| `setAdapter(Adapter adapter)` | ViewPager2에 어댑터를 설정합니다.                           |
+| `setCurrentItem(int item)`    | 현재 보여줄 페이지를 설정합니다.                             |
+| `getCurrentItem()`            | 현재 보여지는 페이지의 인덱스를 반환합니다.                  |
+| `setOrientation(int orientation)` | 페이지 스와이프 방향을 설정합니다. (HORIZONTAL or VERTICAL) |
+| `registerOnPageChangeCallback(OnPageChangeCallback callback)` | 페이지 변경 콜백을 등록합니다. |
+
+#### TabLayout, FragmentStateAdapter, TabLayoutMediator 주요 메서드
+
+| 구성 요소        | 주요 메서드/속성              | 설명                                                         |
+|------------------|------------------------------|-------------------------------------------------------------|
+| TabLayout        | `addTab(Tab tab)`            | TabLayout에 새로운 탭을 추가합니다.                         |
+| FragmentStateAdapter | `createFragment(int position)` | 주어진 위치에 해당하는 Fragment를 생성합니다.               |
+| TabLayoutMediator | `TabLayoutMediator(...)`     | TabLayout과 ViewPager2를 연동합니다.                        |
+| TabLayoutMediator | `attach()`                   | TabLayout과 ViewPager2의 연동을 적용합니다.                 |
+
+#### 공식문서
+[ViewPager2로 프래그먼트 간 슬라이드](https://developer.android.com/develop/ui/views/animations/screen-slide-2?hl=ko)
