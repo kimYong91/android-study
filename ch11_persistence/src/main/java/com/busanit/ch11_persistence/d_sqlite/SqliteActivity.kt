@@ -62,7 +62,8 @@ class SqliteActivity : AppCompatActivity() {
 
                     while (moveToNext()) {
                         // 결과 셋의 매 행마다 데이터를 조회하여 문자열 추가
-                        // getColumnIndex 컬럼의 순서를 가져옴
+                        // getColumnIndex 컬럼의 순서를 가져옴, 존재하지 않을 경우 -1
+                        // getColumnIndexOrThrow 존재하지 않을 경우 예외를 발생시킴
                         val id = getInt(getColumnIndexOrThrow("id"))
                         val name = getString(getColumnIndexOrThrow("name"))
                         val age = getInt(getColumnIndexOrThrow("age"))
