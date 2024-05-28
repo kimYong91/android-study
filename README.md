@@ -2052,3 +2052,25 @@ TabLayout과 ViewPager2는 안드로이드에서 탭 기반 네비게이션을 �
       val users = userDao.getAll()
   }
   ```
+
+#### 룸 라이브러리 영속성 추가
+```
+plugins {
+    ...
+    id 'kotlin-kapt'    // kapt 추가 (Room 사용)
+}
+
+dependencies {
+    // ------- Room 을 사용하기 위한 의존성 추가 ------
+    def room_version = "2.6.1"                               // 버전 설정
+
+    implementation "androidx.room:room-runtime:$room_version"       // 런타임 라이브러리
+    annotationProcessor "androidx.room:room-compiler:$room_version" // 애노태이션 컴파일러
+    implementation "androidx.room:room-ktx:$room_version"           // 코틀린 확장 기능
+
+    // To use Kotlin annotation processing tool (kapt)
+    // builds.gradle 상단항목  plugins { ...  id 'kotlin-kapt'    // kapt 추가 }
+    kapt "androidx.room:room-compiler:$room_version"
+    // ---------- Room 의존성 추가 -----------------
+...
+}
