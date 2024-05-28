@@ -1877,3 +1877,178 @@ TabLayout과 ViewPager2는 안드로이드에서 탭 기반 네비게이션을 �
 
 #### 공식문서
 [ViewPager2로 프래그먼트 간 슬라이드](https://developer.android.com/develop/ui/views/animations/screen-slide-2?hl=ko)
+
+
+### 데이터 저장 (Persistence)
+
+- 데이터 저장(Persistence)은 애플리케이션이 데이터를 유지하고 필요할 때 다시 사용할 수 있도록 하는 중요한 기능
+- 애플리케이션의 사용자 경험을 개선하고, 데이터를 지속적으로 관리
+- 다양한 저장 방식이 있으며, 각 방식은 특정한 요구사항과 사용 시나리오에 맞게 선택.
+- 필요성
+    - 사용자 설정 유지: 사용자가 설정한 옵션이나 상태를 저장하여 앱을 재실행할 때도 동일한 상태를 유지할 수 있음.
+    - 오프라인 사용: 네트워크가 없는 상태에서도 데이터를 유지하여 사용할 수 있게 함.
+    - 앱 성능 향상: 데이터를 로컬에 저장하여 반복적인 네트워크 요청을 줄여 성능을 향상시킴.
+
+
+### 안드로이드 데이터 저장 방식 종류
+
+1. SharedPreferences
+    - 간단한 키-값 쌍을 저장하는 데 사용.
+    - 작은 데이터 저장에 적합하며 내부 저장소에 저장됨.
+    - 주로 사용자 설정, 로그인 상태 등 간단한 정보를 저장할 때 사용.
+    - [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences) |
+
+2. Internal Storage
+    - 앱 전용 파일을 저장하는 데 사용.
+    - 다른 앱이 접근할 수 없는 비공개 파일 저장에 적합.
+    - 캐시 데이터나 앱의 비공개 파일을 저장할 때 사용.
+    - [Internal Storage](https://developer.android.com/training/data-storage/app-specific)
+
+3. External Storage
+    - 대용량 데이터를 저장하거나 다른 앱과 데이터를 공유할 때 사용.
+    - 사진, 동영상, 문서 파일 등 대용량 파일을 저장하는 데 적합.
+    - 접근 권한을 설정해야 하며, SD 카드나 외부 저장소에 저장됨.
+      [External Storage](https://developer.android.com/training/data-storage/shared)
+
+4. SQLite Database
+    - 구조화된 데이터를 저장하고 쿼리하는 데 사용.
+    - 관계형 데이터베이스로 SQL을 사용하여 데이터 조작 가능.
+    - 복잡한 데이터 구조나 다수의 데이터를 저장할 때 적합.
+    - [SQLite Database](https://developer.android.com/training/data-storage/sqlite)
+
+5. Room Persistence Library
+    - SQLite의 추상 레이어로 간편한 ORM(Object Relational Mapping) 제공.
+    - 간단한 코드로 데이터베이스 작업을 수행할 수 있으며, 비동기 처리를 지원.
+    - 구조화된 데이터 저장 및 쿼리에 적합.
+    - [Room Persistence Library](https://developer.android.com/training/data-storage/room)
+
+### Persistence 코드 스니펫
+
+#### 1. SharedPreferences
+- 특징: 간단한 키-값 쌍을 저장할 때 사용. 작은 데이터 저장에 적합.
+- 사용 예시: 사용자 설정, 로그인 상태 등.
+- 코드 예시:
+  ```kotlin
+  val sharedPref = getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+  val editor = sharedPref.edit()
+  editor.putString("key", "value")
+  editor.apply()
+  val value = sharedPref.getString("key", "default")
+  ```
+
+#### 2. Internal Storage
+- 특징: 앱 전용 파일을 저장할 때 사용. 다른 앱이 접근할 수 없음.
+- 사용 예시: 캐시 데이터, 비공개 파일 등.
+- 코드 예시:
+  ```kotlin
+  // 파일 쓰기
+  val fileOutputStream = openFileOutput("filename.txt", Context.MODE_PRIVATE)
+  fileOutputStream.write("Hello World".toByteArray())
+  fileOutputStream.close()
+
+  // 파일 읽기
+  val fileInputStream = openFileInput("filename.txt")
+  val inputStreamReader = InputStreamReader(fileInputStream)
+  val bufferedReader = BufferedReader(inputStreamReader)
+  val stringBuilder = StringBuilder()
+  bufferedReader.forEachLine { stringBuilder.append(it) }
+  val content = stringBuilder.toString()
+  ```
+
+#### 3. External Storage
+- 특징: 대용량 데이터를 저장하거나 다른 앱과 데이터를 공유할 때 사용. 권한 필요.
+- 사용 예시: 사진, 동영상, 문서 파일 등.
+- 코드 예시:
+  ```kotlin
+  // 권한 확인 및 요청
+  if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+  }
+
+  // 파일 쓰기
+  val file = File(getExternalFilesDir(null), "filename.txt")
+  val fileOutputStream = FileOutputStream(file)
+  fileOutputStream.write("Hello World".toByteArray())
+  fileOutputStream.close()
+
+  // 파일 읽기
+  val fileInputStream = FileInputStream(file)
+  val inputStreamReader = InputStreamReader(fileInputStream)
+  val bufferedReader = BufferedReader(inputStreamReader)
+  val stringBuilder = StringBuilder()
+  bufferedReader.forEachLine { stringBuilder.append(it) }
+  val content = stringBuilder.toString()
+  ```
+
+#### 4. SQLite Database
+- 특징: 구조화된 데이터를 저장하고 쿼리할 때 사용. 관계형 데이터베이스.
+- 사용 예시: 복잡한 데이터 구조, 다수의 데이터 저장 등.
+- 코드 예시:
+  ```kotlin
+  class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, "mydatabase.db", null, 1) {
+      override fun onCreate(db: SQLiteDatabase) {
+          db.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)")
+      }
+      override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+          db.execSQL("DROP TABLE IF EXISTS users")
+          onCreate(db)
+      }
+  }
+
+  val dbHelper = MyDatabaseHelper(this)
+  val db = dbHelper.writableDatabase
+  val values = ContentValues().apply {
+      put("name", "John")
+      put("age", 25)
+  }
+  db.insert("users", null, values)
+
+  val cursor = db.query("users", null, null, null, null, null, null)
+  while (cursor.moveToNext()) {
+      val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+      val age = cursor.getInt(cursor.getColumnIndexOrThrow("age"))
+  }
+  cursor.close()
+  ```
+
+#### 5. Room Persistence Library
+- 특징: SQLite의 추상 레이어. 간편한 ORM(Object Relational Mapping) 제공.
+- 사용 예시: 구조화된 데이터 저장 및 쿼리.
+- 코드 예시:
+  ```kotlin
+  @Entity(tableName = "users")
+  data class User(
+      @PrimaryKey(autoGenerate = true) val id: Int = 0,
+      @ColumnInfo(name = "name") val name: String,
+      @ColumnInfo(name = "age") val age: Int
+  )
+
+  @Dao
+  interface UserDao {
+      @Insert
+      suspend fun insert(user: User)
+
+      @Query("SELECT * FROM users")
+      suspend fun getAll(): List<User>
+
+      @Update
+      suspend fun update(user: User)
+
+      @Delete
+      suspend fun delete(user: User)
+  }
+
+  @Database(entities = [User::class], version = 1)
+  abstract class AppDatabase : RoomDatabase() {
+      abstract fun userDao(): UserDao
+  }
+
+  val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "mydatabase.db").build()
+  val userDao = db.userDao()
+
+  // 코루틴 내에서 데이터 작업
+  lifecycleScope.launch {
+      userDao.insert(User(name = "John", age = 25))
+      val users = userDao.getAll()
+  }
+  ```
