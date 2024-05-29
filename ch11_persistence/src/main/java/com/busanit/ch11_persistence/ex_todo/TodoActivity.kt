@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.ch11_persistence.databinding.ActivityTodoBinding
 import kotlinx.coroutines.launch
 
-// 7. 실행 엑티비티 설정
+// 5. 실행 엑티비티 설정
 class TodoActivity : AppCompatActivity() {
     lateinit var binding: ActivityTodoBinding
     lateinit var todoAdapter: TodoAdapter

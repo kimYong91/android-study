@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// 6. 어뎁터 만들기
+// 4. 어뎁터 만들기
 class TodoAdapter(
     val dao: TodoDao,       // 매개변수로 DAO 전달
     private val deleteClickHandler: (Todo) -> Unit   // 매개변수로 함수를 전달 (데이터 삭제를 위해 데이터를 연결하는 매개체)
