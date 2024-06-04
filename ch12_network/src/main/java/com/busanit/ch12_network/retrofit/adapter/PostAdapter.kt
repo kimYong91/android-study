@@ -7,7 +7,7 @@ import com.busanit.ch12_network.databinding.ItemPostBinding
 import com.busanit.ch12_network.retrofit.Post
 
 
-// 아이템을 리싸이클러뷰 어뎁터
+// 4. 아이템을 리싸이클러뷰 어뎁터
 class PostAdapter(val posts: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     class PostViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root){
