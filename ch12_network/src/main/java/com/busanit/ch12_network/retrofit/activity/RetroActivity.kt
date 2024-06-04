@@ -1,6 +1,8 @@
 package com.busanit.ch12_network.retrofit.activity
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.ch12_network.databinding.ActivityRetroBinding
@@ -13,6 +15,7 @@ import retrofit2.Response
 
 class RetroActivity : AppCompatActivity() {
     lateinit var binding: ActivityRetroBinding
+    lateinit var adapter: PostAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRetroBinding.inflate(layoutInflater)
@@ -27,7 +30,8 @@ class RetroActivity : AppCompatActivity() {
                     // 네트워크에 성공할 경우 데이터를 가져옴 (엘비스 연산자로 null처리)
                     val posts = response.body() ?: emptyList()
                     // 리사이클러뷰 어댑터 매개변수를 통해 데이터 전달 + 어뎁터 연결
-                    binding.recyclerView.adapter = PostAdapter(posts)
+                    adapter = PostAdapter(posts)
+                    binding.recyclerView.adapter = adapter
                 }
             }
 
@@ -35,5 +39,18 @@ class RetroActivity : AppCompatActivity() {
                 // 실패 처리
             }
         })
+
+        // Result API
+        val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            adapter.notifyDataSetChanged()  // 리사이클러뷰 데이터셋 갱신
+            binding.recyclerView.scrollToPosition(0)    // 최상단으로 스크롤
+        }
+
+        // 버튼을 클릭하면 클 작성 액티비티로 넘어감
+        binding.buttonCreate.setOnClickListener {
+            val intent = Intent(this, NewPostActivity::class.java)
+            // startActivity(intent)   // 결과 반환하지 않을 시
+            activityResultLauncher.launch(intent)   // 액티비티 결과 반환
+        }
     }
 }
