@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.busanit.ch12_network.databinding.ActivityMainBinding
-import com.busanit.ch12_network.retrofit.Post
+import com.busanit.ch12_network.retrofit.model.Post
 import com.busanit.ch12_network.retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback

@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidstudy">
         <activity
-            android:name=".retrofit.RetroActivity"
+            android:name=".retrofit.activity.CommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".retrofit.activity.RetroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

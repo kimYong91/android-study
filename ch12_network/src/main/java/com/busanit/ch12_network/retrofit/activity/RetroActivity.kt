@@ -1,10 +1,12 @@
-package com.busanit.ch12_network.retrofit
+package com.busanit.ch12_network.retrofit.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.ch12_network.databinding.ActivityRetroBinding
+import com.busanit.ch12_network.retrofit.RetrofitClient
 import com.busanit.ch12_network.retrofit.adapter.PostAdapter
+import com.busanit.ch12_network.retrofit.model.Post
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

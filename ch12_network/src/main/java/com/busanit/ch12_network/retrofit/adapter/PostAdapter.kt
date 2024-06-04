@@ -1,10 +1,12 @@
 package com.busanit.ch12_network.retrofit.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.ch12_network.databinding.ItemPostBinding
-import com.busanit.ch12_network.retrofit.Post
+import com.busanit.ch12_network.retrofit.activity.CommentActivity
+import com.busanit.ch12_network.retrofit.model.Post
 
 
 // 4. 아이템을 리싸이클러뷰 어뎁터
@@ -16,6 +18,14 @@ class PostAdapter(val posts: List<Post>) : RecyclerView.Adapter<PostAdapter.Post
         fun bind(post: Post) {
             binding.titleTextView.text = post.title
             binding.bodyTextView.text = post.body
+            // 항목을 클릭했을 때 댓글을 액티비티로 시작하고 데이터 전달
+            binding.root.setOnClickListener{
+                // 컨텍스트 추출
+                val context = it.context
+                val intent = Intent(context, CommentActivity::class.java)
+                intent.putExtra("postId", post.id)
+                context.startActivity(intent)
+            }
         }
     }
 

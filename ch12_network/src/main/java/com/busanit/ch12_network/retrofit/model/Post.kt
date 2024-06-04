@@ -1,4 +1,4 @@
-package com.busanit.ch12_network.retrofit
+package com.busanit.ch12_network.retrofit.model
 
 // 1. 데이터 클래스 정의
 data class Post(
