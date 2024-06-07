@@ -1,5 +1,6 @@
 package com.busanit.ch13_login.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -16,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        callProtect()
+        val sharedPreferences =
+            getSharedPreferences("app_pref", Context.MODE_PRIVATE)
+
+        // 로그인 시 저장된 사용자 이름을 가져옴
+        val username = sharedPreferences.getString("username", "")
+
     }
 
     // 보호된 사원 네트워크 요청 함수 : 403 번 (금지된 응답 Forbidden, 자원 확인 불가)
