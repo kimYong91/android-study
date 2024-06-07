@@ -5,17 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.busanit.ch13_login.R
 import com.busanit.ch13_login.RetrofitClient
+import com.busanit.ch13_login.databinding.ActivityMainBinding
 import com.busanit.ch13_login.model.Test
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val sharedPreferences =
             getSharedPreferences("app_pref", Context.MODE_PRIVATE)
@@ -23,13 +25,20 @@ class MainActivity : AppCompatActivity() {
         // 로그인 시 저장된 사용자 이름을 가져옴
         val username = sharedPreferences.getString("username", "")
 
+        binding.textViewHello.text = "안녕하세요, ${username}님"
+
+        // 저장된 토큰을 보호괸 리소스 요청시 사용
+        val token = sharedPreferences.getString("token", "") ?: ""
+
+        // 인증 요청시 HTTP 헤더에 "Bearer {jwt_token}" 요청
+        callProtect("Bearer $token")
     }
 
     // 보호된 사원 네트워크 요청 함수 : 403 번 (금지된 응답 Forbidden, 자원 확인 불가)
-    private fun callProtect() {
+    private fun callProtect(token: String) {
         val api = RetrofitClient.api
 
-        api.protect().enqueue(object : Callback<Test> {
+        api.protect(token).enqueue(object : Callback<Test> {
             // 응답이 있는 경우
             override fun onResponse(call: Call<Test>, response: Response<Test>) {
                 // 응답 코드가 200번대
