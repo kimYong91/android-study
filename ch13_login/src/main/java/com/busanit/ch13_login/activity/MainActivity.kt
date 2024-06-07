@@ -1,14 +1,14 @@
 package com.busanit.ch13_login.activity
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.busanit.ch13_login.RetrofitClient
+import com.busanit.ch13_login.adapter.ViewPagerAdapter
 import com.busanit.ch13_login.databinding.ActivityMainBinding
 import com.busanit.ch13_login.model.Test
+import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,38 +20,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPreferences =
-            getSharedPreferences("app_pref", Context.MODE_PRIVATE)
 
-        // 로그인 시 저장된 사용자 이름을 가져옴
-        val username = sharedPreferences.getString("username", "")
-
-        binding.textViewHello.text = "안녕하세요, ${username}님"
 
         // 저장된 토큰을 보호괸 리소스 요청시 사용
-        val token = sharedPreferences.getString("token", "") ?: ""
+        //val token = sharedPreferences.getString("token", "") ?: ""
 
         // 인증 요청시 HTTP 헤더에 "Bearer {jwt_token}" 요청
         //callProtect("Bearer $token")
 
-        // 로그아웃 버튼 클릭 -> 호그아웃
-        binding.buttonLogout.setOnClickListener { logout() }
+
+
+        setupViewPager()    // 뷰페이저 설정
     }
 
-    // 로그아웃 함수
-    private fun logout() {
-        // 1. SharedPreferences 에서 토큰, 사용자 정보 삭제
-        val sharedPreferences =
-            getSharedPreferences("app_pref", Context.MODE_PRIVATE)
-        sharedPreferences.edit()
-            .remove("token")
-            .remove("username")
-            .apply()
+    // 뷰 페이지 설정 함수
+    private fun setupViewPager() {
+        binding.viewPager.adapter = ViewPagerAdapter(this)
 
-        // 2. TitleActivity 로 돌려 보내고 현재 화면 종료
-        startActivity(Intent(this, TitleActivity::class.java))
-        finish()
+        val tabTitles = listOf("홈", "게시판", "설정")
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) {
+            tab, position -> tab.text = tabTitles[position]
+        }.attach()
     }
+
+
 
     // 보호된 사원 네트워크 요청 함수 : 403 번 (금지된 응답 Forbidden, 자원 확인 불가)
     private fun callProtect(token: String) {
