@@ -3,7 +3,6 @@
     <!-- 인터넷 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--  xml 네트워크 보안 설정파일을 참조하도록 추가  -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidstudy">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TitleActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
