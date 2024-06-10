@@ -2299,3 +2299,89 @@ val retrofit = Retrofit.Builder()
 ```
 
 ---
+
+
+## 안드로이드 에물레이터에서 스프링부트 개발서버(http://localhost:8080) 네트워킹
+
+- `CLEARTEXT communication to 10.0.2.2 not permitted by network security policy` 오류 발생
+- 안드로이드 앱에서 `CLEARTEXT communication to 10.0.2.2 not permitted by network security policy` 오류가 발생하는 이유는 안드로이드의 네트워크 보안 정책(Network Security Policy) 때문입니다. 기본적으로 안드로이드 9(Pie) 이상에서는 보안을 강화하기 위해 기본적으로 HTTP와 같은 평문 통신을 차단하고 HTTPS와 같은 암호화된 통신만을 허용합니다.
+
+### HTTP와 HTTPS 차이
+- HTTP (HyperText Transfer Protocol): 인터넷에서 데이터를 주고받기 위한 프로토콜로, 데이터가 암호화되지 않고 평문으로 전송됩니다. 따라서 중간에 데이터가 탈취될 위험이 있습니다.
+- HTTPS (HyperText Transfer Protocol Secure): HTTP에 SSL/TLS 암호화가 추가된 프로토콜로, 데이터가 암호화되어 전송됩니다. 데이터의 기밀성과 무결성을 보장하며, 중간에 데이터가 탈취되거나 변조될 위험이 훨씬 적습니다.
+
+
+### 1. 네트워크 보안 구성 파일 생성
+
+#### `res/xml/network_security_config.xml`
+
+`res/xml` 디렉토리에 `network_security_config.xml` 파일을 생성하고, 다음 내용을 추가합니다.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>
+```
+
+이 파일은 `10.0.2.2` 도메인에 대해 평문 통신을 허용합니다.
+
+### 2. 매니페스트 파일 수정
+
+네트워크 보안 구성 파일을 `AndroidManifest.xml` 파일에서 참조하도록 수정합니다.
+
+#### `AndroidManifest.xml`
+
+```xml
+...
+<application
+    ...
+    android:networkSecurityConfig="@xml/network_security_config">
+    ...
+</application>
+
+```
+
+### 3. Retrofit 인스턴스 재확인
+
+Retrofit 인스턴스에서 사용하는 기본 URL이 HTTP인지 HTTPS인지 다시 확인합니다.
+
+#### `RetrofitInstance.kt`
+
+```kotlin
+package com.busanit.ch13_login
+
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object RetrofitClient {
+    // 안드로이드에서 일반 HTTP 프로토콜 요청은 보안상 금지되어 있음.
+    // https : http 프로토콜에 보안이 추가된 프로토콜
+    // 안드로이드 에뮬레이터에서 localhost는 에뮬레이터 자기자신을 가리킴
+    // 개발 서버의 localhost 접속시 10.0.2.2 IP를 사용
+    // 공식문서 : https://developer.android.com/studio/run/emulator-networking?hl=ko
+
+     private val BASE_URL = "http://10.0.2.2:8080"    // 개인 PC의 localhost(127.0.0.1) 루프백 주소
+    
+//    private val BASE_URL = "http://10.100.203.3:8080"   // 개인 PC의 IP주소
+
+    val api: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+}
+```
+
+- 안드로이드 앱에서 `10.0.2.2` 도메인으로의 평문 통신이 허용되어, 네트워크 통신이 정상적으로 작동.
+
+### 요약
+
+1. `res/xml/network_security_config.xml` 파일을 생성하여 평문 통신을 허용하도록 설정.
+2. `AndroidManifest.xml` 파일에서 네트워크 보안 구성 파일을 참조하도록 수정.
+3. Retrofit 인스턴스의 기본 URL이 HTTP를 사용하는지 확인.
+
