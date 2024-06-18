@@ -2385,3 +2385,66 @@ object RetrofitClient {
 2. `AndroidManifest.xml` 파일에서 네트워크 보안 구성 파일을 참조하도록 수정.
 3. Retrofit 인스턴스의 기본 URL이 HTTP를 사용하는지 확인.
 
+## Spring Boot 3와 Swagger를 사용한 REST API 문서화
+
+### 1. Swagger 소개
+- Swagger: RESTful API를 설계, 빌드, 문서화, 소비하는 오픈 소스 소프트웨어 프레임워크
+- 주요 기능: API 문서 자동 생성, 사용자 인터페이스 제공, API 테스트 및 이해 용이
+- [Swagger 공식 문서](https://swagger.io/docs/)
+
+### 2. SpringDoc OpenAPI 소개
+- SpringDoc OpenAPI: Spring Boot 애플리케이션을 위한 Swagger(OpenAPI) 문서화 라이브러리
+- 특징: Spring 애플리케이션의 REST API 문서를 자동으로 생성하여 Swagger UI를 통해 시각화
+- [Springdoc OpenAPI 공식 문서](https://springdoc.org/)
+
+
+### 3. 의존성 추가
+- `build.gradle` 파일에 Swagger(OpenAPI) 관련 의존성 추가
+
+```gradle
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // SpringDoc OpenAPI
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+```
+
+### 4. Spring Security에서 보안 설정 추가
+- JWT 토큰을 사용한 인증 설정 추가
+```java
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+    ... // 다른 설정
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                ... // 다른 설정
+
+                // 허용되는 url 패턴 추가
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+
+                ... // 다른 설정
+
+        return http.build();
+    }
+```
+
+### 5. swagger-ui 확인
+- 애플리케이션 실행: Spring Boot 애플리케이션을 실행
+- Swagger UI 접속: 브라우저에서 `http://localhost:8080/swagger-ui/index.html` 접속
+- 기능 확인: Swagger UI를 통해 API 엔드포인트 확인 및 테스트
+
+### 6. Postman에서 문서 확인
+- Postman 설치 및 실행: Postman을 다운로드하고 실행
+- Swagger 문서 가져오기:
+    - 상단 메뉴에서 "Import" 클릭
+    - URL, 파일 업로드 또는 Raw 텍스트로 OpenAPI 스펙 가져오기
+- 문서 확인:
+    - 가져온 API를 선택하고 "View Documentation" 클릭
